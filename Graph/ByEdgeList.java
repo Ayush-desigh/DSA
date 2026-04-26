@@ -20,6 +20,8 @@ public class ByEdgeList {
 
         int v=5;
         ArrayList<Edge>[] graph=new ArrayList[v];
+        // Now it is Null -> Nothing in it
+        // we Have to make it Empty
         for(int i=0;i<graph.length;i++)
         {
             graph[i]=new ArrayList<>();
