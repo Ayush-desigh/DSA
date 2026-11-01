@@ -282,18 +282,33 @@ public class LinkedList {
     }
 
     
-    public Node findMiddle(Node head)
-    {
-        Node slow=head;
-        Node fast=head;
+   public Node findMiddle(Node head) {
+    Node slow = head;
+    Node fast = head.next;
 
-        while(fast!=null && fast.next!=null)
-        {
-            slow=slow.next;
-            fast=fast.next.next;
-        }
-        return slow; // Middle node
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
     }
+    return slow;
+}
+    
+    //===============================================find nth Node===========================
+    
+    public int  findNthNode(Node head,int n)
+    {
+    	
+    	Node temp=head;
+    	int i=0;
+    	 while (temp != null && i < n) {
+    	        temp = temp.next;
+    	        i++;
+    	    }
+    	return temp.data;
+    	
+    }
+    
+    
 
     public Node merge(Node head1,Node head2)
     {
@@ -349,7 +364,63 @@ public class LinkedList {
 
         return merge(newLeft,newRight);
     }
+//=============================delete nth node from end of list=============================//
+    
+    public Node removeNthFromEnd(Node head, int n) {
 
+
+        Node temp=head;
+        int size=0;
+
+        while(temp!=null)
+        {
+            temp=temp.next;
+            size++;
+        }
+        if(n==size)
+        {
+            return head=head.next;
+        }
+
+        int i=1;
+        int findSize=size-n;
+        Node prev=head;
+        while(i<findSize)
+        {
+            prev=prev.next;
+            i++;
+        }
+
+        prev.next=prev.next.next;
+        return head;
+        
+    }
+    //========================================================
+    public Node rotateRight(Node head,int k)
+    {
+
+          if (head == null || head.next == null || k == 0) {
+        return head;
+    }
+
+      
+        int i=0;
+        while(i<k)
+        {
+            Node prev=null;
+              Node temp=head;
+            while(temp.next!=null)
+            {
+                prev=temp;
+                temp=temp.next;
+            }
+            temp.next=head;
+            head=temp;
+            prev.next=null;
+            i++;
+        }
+        return head;
+    }
 
 
     public static void main(String[] args) {
@@ -385,9 +456,53 @@ public class LinkedList {
     ll.addFirst(4);
     ll.addFirst(5);
     ll.printList();
+    System.out.println("Nth node is"+ll.findNthNode(head, 3));
     ll.head=ll.mergeSort(ll.head);
+    ll.printList();
+    
+    ll.rotateRight(head, 2);
     ll.printList();
 
 
     }
 }
+/*
+public Node rotateRight(Node head, int k) {
+
+    if (head == null || head.next == null || k == 0) {
+        return head;
+    }
+
+    Node temp = head;
+    int len = 1;
+
+    // Find length and last node
+    while (temp.next != null) {
+        temp = temp.next;
+        len++;
+    }
+
+    // Avoid unnecessary rotations
+    k = k % len;
+
+    if (k == 0) {
+        return head;
+    }
+
+    // Make the list circular
+    temp.next = head;
+
+    // Find the new tail
+    int steps = len - k;
+    Node newTail = head;
+
+    for (int i = 1; i < steps; i++) {
+        newTail = newTail.next;
+    }
+
+    // Set new head and break the cycle
+    Node newHead = newTail.next;
+    newTail.next = null;
+
+    return newHead;
+} */
